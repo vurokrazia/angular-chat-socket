@@ -11,8 +11,9 @@ export class ChatService {
    }
 
    sendMessage(mensaje:string){
+     var u = this.wsService.getUsuario();
      const payload = {
-       de: 'Jesús',
+       de: u ? u.nombre : '',
        cuerpo: mensaje
      };
      this.wsService.emit('mensaje',payload);
@@ -21,5 +22,19 @@ export class ChatService {
    getMessages()
    {
     return this.wsService.listen('nuevo-mensaje');
+   }
+
+   getProducts()
+   {
+    return this.wsService.listen('new-product');
+   }
+   getMessagesPrivate(){
+     return this.wsService.listen('mensaje-privado');
+   }
+   getUsuariosActivos(){
+     return this.wsService.listen('usuarios-activos');
+   }
+   emitirUsuariosActivos(){
+     return this.wsService.listen('obtener-usuarios');
    }
 }
